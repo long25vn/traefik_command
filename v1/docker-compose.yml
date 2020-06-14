@@ -1,0 +1,35 @@
+version: "3.3"
+networks:
+  my-network:
+    external: true
+
+services:
+  traefik:
+    image: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/etc/traefik/traefik.toml
+    networks:
+      - my-network
+    ports:
+      - 80:80
+      - 443:443
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      #labels:
+       # - traefik.http.routers.my-container.rule=Host(`thoitiet.me`)
+       # - traefik.http.services.my-container-service.loadbalancer.server.port=8080
+
+  whoami:    
+    image: jwilder/whoami
+    networks:
+      - my-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.http.routers.my-container.rule=Host(`thoitiet.me`)
+        - traefik.http.services.my-container-service.loadbalancer.server.port=8000
