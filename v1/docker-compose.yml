@@ -31,5 +31,5 @@ services:
         constraints:
           - node.role == manager
       labels:
-        - traefik.http.routers.my-container.rule=Host(`thoitiet.me`)
-        - traefik.http.services.my-container-service.loadbalancer.server.port=8000
+        - traefik.http.routers.whoami.rule=Host(`thoitiet.me`)
+        - traefik.http.services.whoami-service.loadbalancer.server.port=8000
