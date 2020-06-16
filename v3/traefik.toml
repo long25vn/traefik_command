@@ -1,0 +1,14 @@
+[accessLog]
+[log]
+  level = "DEBUG"
+  filePath = "/path/to/log-file.log"
+  format = "json"
+
+[api]
+  dashboard = true
+  insecure = true
+
+[providers.docker]
+  swarmMode = true
+  exposedByDefault = false
+  #endpoint = "unix:///var/run/docker.sock"
