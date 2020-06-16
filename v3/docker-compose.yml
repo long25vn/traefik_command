@@ -1,0 +1,40 @@
+version: "3.3"
+networks:
+  my-network:
+    external: true
+
+services:
+  traefik:
+    image: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/etc/traefik/traefik.toml
+    networks:
+      - my-network
+    ports:
+      - 80:80
+      - 443:443
+      - 8001:81
+      - 8002:8080
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  whoip:    
+    image: jwilder/whoami
+    networks:
+      - my-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.whoip.rule=Host(`thoitiet.me`)||Host(`www.thoitiet.me`)
+        - traefik.http.services.whoip-service.loadbalancer.server.port=8000
+        # Create a middleware named `test-redirectregex`
+        # And Apply the middleware named `test-redirectregex` to the router named `whoip`
+        - "traefik.http.routers.whoip.middlewares=test-redirectregex@docker"
+        - "traefik.http.middlewares.test-redirectregex.redirectregex.regex=^http://www.valorantgun.com/(.*)"
+        - "traefik.http.middlewares.test-redirectregex.redirectregex.replacement=http://valorantgun.com/$${1}"
