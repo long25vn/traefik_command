@@ -36,5 +36,5 @@ services:
         # Create a middleware named `test-redirectregex`
         # And Apply the middleware named `test-redirectregex` to the router named `whoip`
         - "traefik.http.routers.whoip.middlewares=test-redirectregex@docker"
-        - "traefik.http.middlewares.test-redirectregex.redirectregex.regex=^http://www.valorantgun.com/(.*)"
-        - "traefik.http.middlewares.test-redirectregex.redirectregex.replacement=http://valorantgun.com/$${1}"
+        - "traefik.http.middlewares.test-redirectregex.redirectregex.regex=^http://www.thoitiet.me/(.*)"
+        - "traefik.http.middlewares.test-redirectregex.redirectregex.replacement=http://thoitiet.me/$${1}"
